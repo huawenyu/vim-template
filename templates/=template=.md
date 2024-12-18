@@ -1,13 +1,19 @@
 ---
-  title: Markdown PPT
-  sub_title: (by presenterm!)
+  title: %CAMELCLASS%
+  sub_title: _
   authors:
-    -  Me
-    - You
+    - %USER%
+    - %MAIL%
+    - presenterm -x [^1]
+    - %FDATE%
   options:
     command_prefix: "cmd:"
+    image_attributes_prefix: ""
+    strict_front_matter_parsing: false
+    incremental_lists: false
+    implicit_slide_ends: false
+    end_slide_shorthand: false
 ---
-<!-- PPT: presenterm -x the.md -->
 
 # Header1 {{{1}}}
 
@@ -27,7 +33,7 @@ struct Node {
   _Column 1_
   -
 ```file  +exec +line_numbers
-path: assets/demo.cxx
+path: %FULLPATH%
 language: c++
 ```
  <!-- cmd:reset_layout -->
@@ -35,20 +41,21 @@ language: c++
 
 ## Header2 {{{2}}}
 
-  <!-- pause -->
-  <!-- incremental_lists: true -->
+  <!-- cmd:pause -->
+  <!-- cmd:incremental_lists: true -->
 - item 1
 - item 2
 - item 3
- <!-- incremental_lists: false -->
+ <!-- cmd:incremental_lists: false -->
  <!-- cmd:end_slide -->
 
 # End {{{1}}}
 
-<!-- jump_to_middle -->
+<!-- cmd:jump_to_middle -->
   **THANKS**
   -
 ---
-![](assets/option.png)
-<!-- end_slide -->
+<!-- cmd:end_slide -->
+
+[^1]: [A markdown terminal slideshow tool](https://github.com/mfontanini/presenterm)
 
