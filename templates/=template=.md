@@ -57,5 +57,6 @@ language: c++
 ---
 <!-- cmd:end_slide -->
 
-[^1]: [A markdown terminal slideshow tool](https://github.com/mfontanini/presenterm)
-[^2]: [Template Var](https://github.com/aperezdc/vim-template/blob/master/doc/template.txt)
+[^1]: [A markdown terminal slideshow tool](https://github.com/mfontanini/presenterm)  
+[^2]: [Template Var](https://github.com/aperezdc/vim-template/blob/master/doc/template.txt)  
+
