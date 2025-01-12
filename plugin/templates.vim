@@ -510,14 +510,23 @@ endfunction
 " suffix, as explained before =)
 "
 fun ListTemplateSuffixes(A,P,L)
-  let l:templates = split(globpath(s:default_template_dir, g:templates_global_name_prefix . a:A . "*"), "\n")
-  let l:res = []
-  for t in templates
-    let l:suffix = substitute(t, ".*\\.", "", "")
-    call add(l:res, l:suffix)
-  endfor
+	echomsg "wilson:'" .. a:A .. "'"
+	let l:templates = split(globpath(s:default_template_dir, g:templates_global_name_prefix . a:A . "*"), "\n")
+	let l:res = []
+	for t in l:templates
+		let l:suffix = substitute(fnamemodify(t, ':t'), '\v(^[^.]+)\.', "", "")
+		call add(l:res, l:suffix)
+	endfor
 
-  return l:res
+	for l:dir in g:templates_directory
+		let l:templates = split(globpath(l:dir, g:templates_global_name_prefix . a:A . "*"), "\n")
+		for t in l:templates
+			let l:suffix = substitute(fnamemodify(t, ':t'), '\v(^[^.]+)\.', "", "")
+			call add(l:res, l:suffix)
+		endfor
+	endfor
+
+	return l:res
 endfun
 
 command -nargs=? -complete=customlist,ListTemplateSuffixes Template call <SID>TLoad(0, "<args>")
