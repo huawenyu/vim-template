@@ -510,20 +510,11 @@ endfunction
 " suffix, as explained before =)
 "
 fun ListTemplateSuffixes(A,P,L)
-	echomsg "wilson:'" .. a:A .. "'"
-	let l:templates = split(globpath(s:default_template_dir, g:templates_global_name_prefix . a:A . "*"), "\n")
+	let l:templates = split(globpath(s:default_template_dir .. "," .. join(g:templates_directory, ","), "*" . a:A . "*"), "\n")
 	let l:res = []
 	for t in l:templates
-		let l:suffix = substitute(fnamemodify(t, ':t'), '\v(^[^.]+)\.', "", "")
+		let l:suffix = substitute(fnamemodify(t, ':t'), '\v(^[^.]+)\.', ".", "")
 		call add(l:res, l:suffix)
-	endfor
-
-	for l:dir in g:templates_directory
-		let l:templates = split(globpath(l:dir, g:templates_global_name_prefix . a:A . "*"), "\n")
-		for t in l:templates
-			let l:suffix = substitute(fnamemodify(t, ':t'), '\v(^[^.]+)\.', "", "")
-			call add(l:res, l:suffix)
-		endfor
 	endfor
 
 	return l:res
@@ -561,3 +552,4 @@ for s:directory in g:templates_directory
 endfor
 
 " vim: fdm=marker
+"
