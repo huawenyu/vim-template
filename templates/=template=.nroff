@@ -1,0 +1,50 @@
+.TH %CAMELCLASS% 1
+.SH NAME
+mycommand \- My custom command
+.SH SYNOPSIS
+mycommand [options]
+.Nm
+.Op Fl abcd              \" [-abcd]
+.Op Fl a Ar path         \" [-a path]
+.Op Ar file              \" [file]
+.Op Ar                   \" [file ...]
+.Ar arg0                 \" Underlined argument - use .Ar anywhere to underline
+arg2 ...                 \" Arguments
+.SH DESCRIPTION
+This is a description of my custom command.
+.SH OPTIONS
+-a, --option1  Description of option1
+-b, --option2  Description of option2
+.SH EXAMPLES
+mycommand --option1
+mycommand --option2
+Use the .Nm macro to refer to your program throughout the man page like such:
+.Nm
+Underlining is accomplished with the .Ar macro like this:
+.Ar underlined text .
+.Pp                      \" Inserts a space
+A list of items with descriptions:
+.Bl -tag -width -indent  \" Begins a tagged list
+.It item a               \" Each item preceded by .It macro
+Description of item a
+.It item b
+Description of item b
+.El                      \" Ends the list
+.Pp
+A list of flags and their descriptions:
+.Bl -tag -width -indent  \" Differs from above in tag removed
+.It Fl a                 \"-a flag as a list item
+Description of -a flag
+.It Fl b
+Description of -b flag
+.El                      \" Ends the list
+.Pp
+
+.Sh SEE ALSO
+.Xr a 1 ,
+.Xr b 1 ,
+.SH SEE ALSO
+related_command
+.SH AUTHOR
+%USER% %MAIL%
+

@@ -1,0 +1,43 @@
+-- vim: ft=lua setlocal autoindent cindent et ts=4 sw=4 sts=4:
+
+local M = {}
+
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
+local conf = require("telescope.config").values
+
+-- Function to search man pages
+M.search = function()
+  -- Get all man pages using `man -k .`
+  local man_pages = vim.fn.systemlist("man -k .")  -- Get list of all available man pages
+
+  pickers.new({}, {
+    prompt_title = "Search Man Pages",
+    finder = finders.new_table({
+      results = man_pages,
+    }),
+    sorter = conf.generic_sorter({}),
+    attach_mappings = function(prompt_bufnr, map)
+      actions.select_default:replace(function()
+        actions.close(prompt_bufnr)
+        local selection = action_state.get_selected_entry()
+        local man_page = selection[1]
+        -- Open the selected man page with `:Man <page>`
+        vim.cmd("Man " .. man_page)
+      end)
+      return true
+    end,
+  }):find()
+end
+
+-- Register the function as a Telescope extension with a new name
+require('telescope').register_extension({
+  exports = {
+    search = M.search  -- Use the shorter name for the command
+  }
+})
+
+return M
+

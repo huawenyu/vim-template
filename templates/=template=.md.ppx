@@ -1,0 +1,122 @@
+---
+  title: %CAMELCLASS%
+  sub_title: _
+  authors:
+    - %USER%
+    - %MAIL%
+    - presenterm -x [^1]
+    - %FDATE%
+  options:
+    command_prefix: "cmd:"
+    image_attributes_prefix: ""
+    strict_front_matter_parsing: false
+    incremental_lists: false
+    implicit_slide_ends: false
+    end_slide_shorthand: false
+---
+
+# Presenterm
+
+ <!-- cmd:pause -->
+ _Draw simple flowchart_
+ -
+```ascii +exec_replace
+flowchart LR
+  Write PPT[markdown] -->| presenterm | Terminal Show
+```
+
+ <!-- cmd:pause -->
+ _presenterm_
+ -
+- [Website](https://github.com/mfontanini/presenterm)
+ <!-- cmd:pause -->
+ <!-- cmd:incremental_lists: true -->
+- Download directly from https://github.com/mfontanini/presenterm/releases
+- [or] cargo install --git https://github.com/mfontanini/presenterm      ### Install nightly
+- [or] nix-env -iA nixpkgs.presenterm  # for non-nixos
+
+ <!-- cmd:incremental_lists: false -->
+
+ <!-- cmd:pause -->
+ _mermaid render_
+ -
+ <!-- cmd:pause -->
+```bash
+# Get the latest release
+$ curl -s https://api.github.com/repos/AlexanderGrooff/mermaid-ascii/releases/latest | grep "browser_download_url.*mermaid-ascii" | grep "$(uname)_$(uname -m)" | cut -d: -f2,3 | tr -d \" | wget -qi -
+# Unzip it
+$ tar xvzf mermaid-ascii_*.tar.gz
+$ ./mermaid-ascii --help
+```
+
+ <!-- cmd:end_slide -->
+ <!-- cmd:pause -->
+ _OS version_
+ -
+```file  +exec +line_numbers
+path: /etc/os-release
+language: c++
+```
+
+ <!-- cmd:pause -->
+ _Config customize executor_
+ -
+  <!-- cmd:pause -->
+```yaml
+# ~/.config/presenterm/config.yaml
+# Options:   {4|5-7|all} +line_numbers +exec +acquire_terminal
+snippet:
+  exec_replace:
+    enable: true
+  exec:
+    enable: true
+    custom:
+      ascii:
+        filename: "snippet.mermaid"
+        commands:
+          - ["mermaid-ascii", "-f", "$pwd/snippet.mermaid"]
+```
+
+ <!-- cmd:end_slide -->
+
+## Topic
+
+<!-- cmd:column_layout: [1, 1] -->
+ <!-- cmd:column: 0 -->
+ <!-- cmd:pause -->
+ _bat: syntax any file_
+ -
+ <!-- cmd:pause -->
+
+```bash +exec_replace
+# If not suport code-render, we can use exist tool:
+bat -nP -r 10:14 --color always %FULLPATH%
+```
+
+ <!-- cmd:column: 1 -->
+ <!-- cmd:pause -->
+ _bash: execute any file_
+ -
+```bash +exec_replace
+# If not suport code-render, we can use exist tool:
+bat -nP -r 10:14 --color always %FULLPATH%
+```
+
+ <!-- cmd:reset_layout -->
+ <!-- cmd:end_slide -->
+
+
+<!-- cmd:jump_to_middle -->
+  **An new topic**
+  -
+ <!-- cmd:pause -->
+  **THANKS**
+  -
+---
+<!-- cmd:end_slide -->
+
+[^1]: [A markdown terminal slideshow tool](https://github.com/mfontanini/presenterm)  
+[^2]: [Render Mermaid graphs inside your terminal](https://github.com/AlexanderGrooff/mermaid-ascii)  
+
+<!-- vim: ft=markdown setlocal autoindent cindent et ts=4 sw=4 sts=4 -->
+

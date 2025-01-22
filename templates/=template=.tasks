@@ -1,0 +1,20 @@
+# Doc:
+# https://github.com/skywind3000/asynctasks.vim?tab=readme-ov-file
+#
+[build]
+command=make -C server/tcl-unix-sockets
+# set the working directory to the project root.
+cwd=$(VIM_ROOT)
+output=quickfix
+save=2
+
+[run]
+command=make run
+# <root> is an alias to `$(VIM_ROOT)`, a little easier to type.
+cwd=<root>
+output=terminal
+#pos=termhelp
+#pos=floaterm
+pos=toggleterm
+
+
