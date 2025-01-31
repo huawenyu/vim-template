@@ -6,19 +6,12 @@
     - %MAIL%
     - presenterm -x [^1]
     - %FDATE%
-  options:
-    command_prefix: "cmd:"
-    image_attributes_prefix: ""
-    strict_front_matter_parsing: false
-    incremental_lists: false
-    implicit_slide_ends: false
-    end_slide_shorthand: false
 ---
 
 # Presenterm
 
  <!-- cmd:pause -->
- _Draw simple flowchart_
+ _Demo of Mermaid Render_
  -
 ```ascii +exec_replace
 flowchart LR
@@ -26,7 +19,7 @@ flowchart LR
 ```
 
  <!-- cmd:pause -->
- _presenterm_
+ _Install presenterm_
  -
 - [Website](https://github.com/mfontanini/presenterm)
  <!-- cmd:pause -->
@@ -38,7 +31,7 @@ flowchart LR
  <!-- cmd:incremental_lists: false -->
 
  <!-- cmd:pause -->
- _mermaid render_
+ _Install mermaid render_
  -
  <!-- cmd:pause -->
 ```bash
@@ -88,7 +81,7 @@ snippet:
  -
  <!-- cmd:pause -->
 
-```bash +exec_replace
+```bash +exec +acquire_terminal +line_numbers
 # If not suport code-render, we can use exist tool:
 bat -nP -r 10:14 --color always %FULLPATH%
 ```
