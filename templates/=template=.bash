@@ -1,6 +1,10 @@
 #! /bin/bash
 # vim: setlocal autoindent cindent et ts=4 sw=4 sts=4:
 #
+# Get the script's directory, resolving symlinks
+var_ScriptDir="$( cd "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" &> /dev/null && pwd )"
+var_WorkDir=$(pwd)
+
 _Usage=$(cat <<-END
     Usage: handle a files
       script [options] [file ...]
@@ -52,6 +56,7 @@ DoIt () {
 }
 
 main () {
+    # Handle extra args out-of-getoptions
     case "$#" in
         2)
             ;;
@@ -80,11 +85,11 @@ main () {
         exit 1
     fi
 
-    if [[ "$var_VERBOSE" >= 3 ]]; then
+    if [[ "$var_VERBOSE" -ge 3 ]]; then
         set -x                              ### Print each command before eval
     fi
 
-    if [[ "$var_VERBOSE" >= 4 ]]; then
+    if [[ "$var_VERBOSE" -ge 4 ]]; then
         set -v                              ### Print each line of the script before eval
     fi
 
@@ -92,7 +97,8 @@ main () {
     # set --                                ### Clears positional parameters
     # input="arg1 arg2 'arg with spaces'"   ### If arg have space
     # eval set -- $input
-    set -- $(ls *.txt)                      ### Assigns all .txt filename to $1, $2, etc.
+
+    #set -- $(ls *.txt)                      ### Assigns all .txt filename to $1, $2, etc.
     do_task "$@"
 }
 
@@ -151,7 +157,7 @@ function cleanup() {
     fi
 
     # Backto the original current dir
-    cd "$currDir"
+    cd "$var_WorkDir"
 }
 
 main "$@"
