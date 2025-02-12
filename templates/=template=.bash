@@ -8,6 +8,13 @@ var_ScriptName="${var_ScriptName%.*}"
 var_WorkDir=$(pwd)
 SECONDS=0
 
+# echo -e "${colorRed}This is red${colorReset}"
+colorRed='\e[31m'
+colorGreen='\e[32m'
+colorYellow='\e[33m'
+colorReset='\e[0m'
+
+
 _Usage=$(cat <<-END
     Usage: handle a files
       script [options] [file ...]
@@ -79,6 +86,7 @@ int ()
     printf '%d' $(expr ${1:-} : '[^0-9]*\([0-9]*\)' 2>/dev/null) || :
 }
 
+
 do_args () {
     if [[ -n "$var_DRYRUN" ]]; then
         ( set -o posix ; set ) | grep -e '^var_'
@@ -105,6 +113,8 @@ main () {
 
     #set -- $(ls *.txt)                      ### Assigns all .txt filename to $1, $2, etc.
     do_task "$@"
+
+    cleanup
 }
 
 
@@ -126,8 +136,9 @@ do_task () {
     done
 }
 
+
 die () {
-    [ "$#" -gt 0 ] && echo "$0: $@" >&2
+    [ "$#" -gt 0 ] && echo -e "${colorRed}  $0: $@  ${colorReset}" >&2
     cleanup
     exit 1
 }
@@ -145,7 +156,7 @@ maketemp () {
 }
 
 
-function cleanup() {
+cleanup() {
     trap - EXIT
 
     duration=$SECONDS
