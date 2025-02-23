@@ -49,7 +49,25 @@ parse_define() {
 }
 
 
-# Parse manually if no getoptions
+# Option 2: Parse manually if no getoptions
+# Define options
+    OPTIONS="hf:o:"
+    LONGOPTIONS="help,file:,output:"
+
+    # Parse options
+    PARSED=$(getopt -o "$OPTIONS" --long "$LONGOPTIONS" -- "$@")
+    if [[ $? -ne 0 ]]; then
+        die "Invalid option"
+    fi
+
+    # Evaluate parsed options
+    eval set -- "$PARSED"
+
+    # Default values
+    file=""
+    output=""
+
+# Process options
 parse_args () {
     case "$#" in
         2)
@@ -67,16 +85,30 @@ parse_args () {
             ;;
     esac
 
-    # Help
-    while getopts "h" opt; do
-        case $opt in
-            h)
+    while true; do
+        case "$1" in
+            -h|--help)
                 echo "$_Usage"
                 exit 0
                 ;;
+            -f|--file)
+                file="$2"
+                shift 2
+                ;;
+            -o|--output)
+                output="$2"
+                shift 2
+                ;;
+            --)
+                shift
+                break
+                ;;
+            *)
+                die "Invalid option"
+                exit 1
+                ;;
         esac
     done
-
 }
 
 
@@ -160,7 +192,7 @@ cleanup() {
     trap - EXIT
 
     duration=$SECONDS
-    echo "trap-cleanup(action=$action time=$(($duration / 60))m:$(($duration % 60))s)"
+    echo "trap-cleanup(action=$var_Action time=$(($duration / 60))m:$(($duration % 60))s)"
 
     if [ -n "$TEMPFILE" ]; then
         rm -f "$TEMPFILE" 2> /dev/null
