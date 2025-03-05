@@ -120,6 +120,25 @@ int ()
 
 
 do_args () {
+    ### Extra arguments
+    case "$#" in
+        2)
+            var_Action="$1"
+            var_SubAct="$2"
+            ;;
+        1)
+            var_Action="$1"
+            ;;
+        0)
+            ;;
+        *)
+            echo "$_Usage"
+            die "Incorrect arguments"
+            ;;
+    esac
+
+
+    ### Handle arguments
     if [[ -n "$var_DRYRUN" ]]; then
         ( set -o posix ; set ) | grep -e '^var_'
         exit 1
@@ -136,7 +155,7 @@ do_args () {
 
 
 main () {
-    do_args
+    do_args "$@"
 
     ### Normalize the args
     # set --                                ### Clears positional parameters
