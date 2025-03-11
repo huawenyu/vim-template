@@ -16,16 +16,6 @@ colorReset='\e[0m'
 
 
 _Usage=$(cat <<-END
-    Usage: handle a files
-      script [options] [file ...]
-
-    Options:
-      -v, -vvv, --verbose   Print all cmds if v<count> >= 3,
-      -n, --dryrun          Dump variables if prefix-as 'var_'
-      -d, --debug
-      -h, --help            Usage
-      --version             Version
-
     Sample:
       bash -x script        # Run the script with debug mode enabled.
       bash -n script        # Check for syntax errors without execution.
@@ -210,15 +200,19 @@ maketemp () {
 cleanup() {
     trap - EXIT
 
-    duration=$SECONDS
-    echo "trap-cleanup(action=$var_Action time=$(($duration / 60))m:$(($duration % 60))s)"
+    if [[ -n "$var_DEBUG" ]]; then
+        echo -e "Tempfile: \n    $TEMPFILE\n    $TEMPFILE2\n"
 
-    if [ -n "$TEMPFILE" ]; then
-        rm -f "$TEMPFILE" 2> /dev/null
-    fi
+        duration=$SECONDS
+        echo "trap-cleanup(action=$var_Action time=$(($duration / 60))m:$(($duration % 60))s)"
+    else
+        if [ -n "$TEMPFILE" ]; then
+            rm -f "$TEMPFILE" 2> /dev/null
+        fi
 
-    if [ -n "$TEMPFILE2" ]; then
-        rm -f "$TEMPFILE2" 2> /dev/null
+        if [ -n "$TEMPFILE2" ]; then
+            rm -f "$TEMPFILE2" 2> /dev/null
+        fi
     fi
 
     # Backto the original current dir
