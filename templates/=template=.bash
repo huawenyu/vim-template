@@ -40,7 +40,8 @@ parse_define() {
 
 
 # Option 2: Parse manually if no getoptions
-# Define options
+parse_args () {
+    # Define options
     OPTIONS="hf:o:"
     LONGOPTIONS="help,file:,output:"
 
@@ -56,24 +57,6 @@ parse_define() {
     # Default values
     file=""
     output=""
-
-# Process options
-parse_args () {
-    case "$#" in
-        2)
-            var_Action="$1"
-            var_SubAct="$2"
-            ;;
-        1)
-            var_Action="$1"
-            ;;
-        0)
-            ;;
-        *)
-            echo "$_Usage"
-            die "Incorrect arguments"
-            ;;
-    esac
 
     while true; do
         case "$1" in
