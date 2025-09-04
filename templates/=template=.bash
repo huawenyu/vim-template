@@ -3,8 +3,8 @@
 #
 # Get the script's directory, resolving symlinks
 var_ScriptDir="$( cd "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" &> /dev/null && pwd )"
-var_ScriptName=$(basename "$0")
-var_ScriptName="${var_ScriptName%.*}"
+var_ScriptName2=$(basename "$0")
+var_ScriptName="${var_ScriptName2%.*}"
 var_WorkDir=$(pwd)
 SECONDS=0
 
@@ -16,17 +16,17 @@ colorReset='\e[0m'
 
 
 _Usage=$(cat <<-END
-    Sample:
-      bash -x script        # Run the script with debug mode enabled.
-      bash -n script        # Check for syntax errors without execution.
+Sample:
+      bash -x $var_ScriptName2        # Run the script with debug mode enabled.
+      bash -n $var_ScriptName2        # Check for syntax errors without execution.
 
-      script afile
+      $var_ScriptName2 afile
 
 END
 )
 
 parse_define() {
-  setup   REST help:usage -- "Usage: $var_ScriptName [options] ..." ''
+  setup   REST help:usage -- "Usage: $var_ScriptName2 [options] ..." ''
 
   msg -- 'Options:'
   flag  var_VERBOSE    -v --verbose  counter:true init:=0    -- "e.g. -vvv is verbose level 3"
